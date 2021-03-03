@@ -8,7 +8,7 @@
 
 # --- Configuration ---
 
-ARTIFACT_DIR="~/artifacts"
+ARTIFACT_DIR="$HOME/artifacts"
 
 # --- Functions ---
 
@@ -32,9 +32,9 @@ function build_docs_artifact() {
   git clone https://github.com/tomaz/appledoc
   cd appledoc
   sudo sh install-appledoc.sh
-  appledoc --exit-threshold=2 "$ROOT/Scripts/AppledocSettings.plist"
-  ditto -c -k --sequesterRsrc --keepParent "$ROOT/Docs/html" "$ARTIFACT_DIR/$1"
-  cd ..
+  cd "$ROOT"
+  appledoc --exit-threshold=2 "./Scripts/AppledocSettings.plist"
+  ditto -c -k --sequesterRsrc --keepParent "./Docs/html" "$ARTIFACT_DIR/$1"
 }
 
 function move_artifacts() {
