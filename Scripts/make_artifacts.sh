@@ -28,12 +28,13 @@ function build_carthage_artifact() {
 }
 
 function build_docs_artifact() {
-  pwd | pbcopy
+  ROOT="$(pwd)"
   git clone https://github.com/tomaz/appledoc
   cd appledoc
   sudo sh install-appledoc.sh
-  appledoc --exit-threshold=2 "$(pbpaste)/Scripts/AppledocSettings.plist"
-  ditto -c -k --sequesterRsrc --keepParent "$(pbpaste)/Docs/html" "$ARTIFACT_DIR/$1"
+  appledoc --exit-threshold=2 "$ROOT/Scripts/AppledocSettings.plist"
+  ditto -c -k --sequesterRsrc --keepParent "$ROOT/Docs/html" "$ARTIFACT_DIR/$1"
+  cd ..
 }
 
 function move_artifacts() {
