@@ -9,8 +9,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Update xcodeproj gem
-        run: sudo gem install xcodeproj
+      #- name: Update xcodeproj gem
+      #  run: sudo gem install xcodeproj
 
       - name: Prevent social URL warnings if twitter is unreachable
         run: find . -path '*.podspec' -exec perl -pi -e 's/.+\.social_media_url.+//' {} \;
