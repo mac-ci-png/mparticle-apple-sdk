@@ -47,7 +47,7 @@ function move_artifacts() {
   # we can't keep them in currect directory because we manipulate git and
   # they will get wiped out, so this moves them back in when it's safe
 
-  find -type f "$ARTIFACT_DIR" | xargs -n 1 -J % mv % .
+  find "$ARTIFACT_DIR" -type f | xargs -n 1 -J % mv % .
 }
 
 # --- Main impl ---
