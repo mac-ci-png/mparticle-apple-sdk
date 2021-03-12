@@ -7,7 +7,6 @@
 #
 
 # --- Configuration ---
-set -e
 WORK_DIR="$(pwd)"
 ARTIFACT_DIR="$HOME/artifacts"
 TEMP_DIR="$HOME/temp"
