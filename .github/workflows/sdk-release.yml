@@ -42,6 +42,8 @@ jobs:
       - name: Build repo artifacts
         run: |
               ./Scripts/make_artifacts.sh
+              ls mParticle_Apple_SDK.framework.zip mParticle_Apple_SDK.framework.nolocation.zip mParticle_Apple_SDK.xcframework.zip mParticle_Apple_SDK.xcframework.nolocation.zip generated-docs.zip || exit 1
+
 
       - name: Push publicly to Github
         run: |
