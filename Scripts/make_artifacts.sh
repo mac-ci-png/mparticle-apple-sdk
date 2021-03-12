@@ -3,10 +3,11 @@
 #
 # This script creates pre-built SDK artfacts that will be attached to the GitHub release.
 #
-# If you add new files here, you need to also add them in release.config.js.
+# If you add new files here, you need to also add them in sdk-release.yml.
 #
 
 # --- Configuration ---
+set -e
 WORK_DIR="$(pwd)"
 ARTIFACT_DIR="$HOME/artifacts"
 TEMP_DIR="$HOME/temp"

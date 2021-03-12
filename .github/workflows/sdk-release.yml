@@ -12,8 +12,7 @@ jobs:
     env:
       VERSION: ${{ github.event.inputs.VERSION }}
       GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      REPO_SLUG: "mac-ci-png/mparticle-apple-sdk"
-      RELEASE_BODY: ""
+      COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,6 +21,7 @@ jobs:
         run: |
               env | grep -q '^VERSION=' || (echo "Required environment variable VERSION is not set" && exit 1)
               env | grep -q '^GITHUB_ACCESS_TOKEN=' || (echo "Required environment variable GITHUB_ACCESS_TOKEN is not set" && exit 1)
+              env | grep -q '^COCOAPODS_TRUNK_TOKEN=' || (echo "Required environment variable COCOAPODS_TRUNK_TOKEN is not set" && echo exit 1)
               git apply Scripts/0001-DISABLE-LOCATION.patch || (echo "Disable location patch could not be successfully applied" && exit 1)
               git checkout .
 
@@ -39,23 +39,27 @@ jobs:
               podspec-bump -w -i $VERSION
               git add mParticle-Apple-SDK/MPIConstants.m Framework/Info.plist; git add mParticle-Apple-SDK.podspec; git add mParticle_Apple_SDK.json; git commit -m "Update version to $VERSION"
 
-      - name: Push publicly to Github
+      - name: Build repo artifacts
+        run: |
+              ./Scripts/make_artifacts.sh
 
+      - name: Push publicly to Github
         run: |
               git tag $VERSION
               git push origin HEAD:development
               git push origin HEAD:master
               git push origin $VERSION
 
-      - name: Build and upload Carthage repo artifacts
-
+      - name: Create GitHub release and upload repo artifacts
         run: |
               curl -v --data '{"tag_name": "'"$VERSION"'","target_commitish": "master","name": "Version '"$VERSION"'","body": "'"$RELEASE_BODY"'","draft": false,"prerelease": false}' https://api.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases?access_token=$GITHUB_ACCESS_TOKEN | grep '^  "id": ' | sed 's/"id":[ ]*\([^,]*\),/\1/' > /tmp/release-id
               export RELEASE_ID="$(cat /tmp/release-id | sed 's/[ ]*//g')"
-              ./Scripts/make_artifacts.sh
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.framework.zip" --header 'Content-Type: application/zip' --upload-file mParticle_Apple_SDK.framework.zip -X POST || true
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.framework.nolocation.zip" --header 'Content-Type: application/zip' --upload-file mParticle_Apple_SDK.framework.nolocation.zip -X POST || true
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.xcframework.zip" --header 'Content-Type: application/zip' --upload-file mParticle_Apple_SDK.xcframework.zip -X POST || true
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.xcframework.nolocation.zip" --header 'Content-Type: application/zip' --upload-file mParticle_Apple_SDK.xcframework.nolocation.zip -X POST || true
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=generated-docs.zip" --header 'Content-Type: application/zip' --upload-file generated-docs.zip -X POST || true
 
+      - name: Release to CocoaPods
+        run: |
+              echo pod trunk push --allow-warnings
