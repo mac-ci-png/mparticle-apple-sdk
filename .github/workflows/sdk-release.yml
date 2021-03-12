@@ -13,7 +13,7 @@ jobs:
       VERSION: ${{ github.event.inputs.VERSION }}
       GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO_SLUG: "mac-ci-png/mparticle-apple-sdk"
-      RELEASE_BODY: "test line 1\\\ntest line 2\\\n  test line 3"
+      RELEASE_BODY: ""
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -57,5 +57,5 @@ jobs:
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.framework.nolocation.zip" --header 'Content-Type: application/zip' --upload-file mParticle_Apple_SDK.framework.nolocation.zip -X POST || true
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.xcframework.zip" --header 'Content-Type: application/zip' --upload-file mParticle_Apple_SDK.xcframework.zip -X POST || true
               curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.xcframework.nolocation.zip" --header 'Content-Type: application/zip' --upload-file mParticle_Apple_SDK.xcframework.nolocation.zip -X POST || true
-              curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=mParticle_Apple_SDK.framework.zip" --header 'Content-Type: application/zip' --upload-file generated-docs.zip -X POST || true
+              curl -v "https://uploads.github.com/repos/mac-ci-png/mparticle-apple-sdk/releases/$RELEASE_ID/assets?access_token=$GITHUB_ACCESS_TOKEN&name=generated-docs.zip" --header 'Content-Type: application/zip' --upload-file generated-docs.zip -X POST || true
 
