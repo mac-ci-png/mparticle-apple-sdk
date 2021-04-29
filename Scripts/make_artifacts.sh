@@ -64,4 +64,6 @@ build_carthage_artifact mParticle_Apple_SDK.xcframework.nolocation.zip
 
 build_docs_artifact generated-docs.zip
 
+git reset --soft HEAD^
+
 move_artifacts
