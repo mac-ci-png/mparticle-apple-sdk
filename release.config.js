@@ -24,7 +24,7 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        prepareCmd: "sh ./Scripts/release.sh ${nextRelease.version} \"{nextRelease.notes}\"",
+        prepareCmd: "sh ./Scripts/release.sh ${nextRelease.version} \"${nextRelease.notes}\"",
       },
     ],
     [
