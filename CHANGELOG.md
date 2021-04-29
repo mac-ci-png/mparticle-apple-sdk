@@ -1,4 +1,3 @@
-# mParticle Apple SDK CHANGELOG
 
 ## 8.3.2
 

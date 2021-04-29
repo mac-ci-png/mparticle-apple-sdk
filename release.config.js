@@ -22,6 +22,12 @@ module.exports = {
       },
     ],
     [
+      "@semantic-release/exec",
+      {
+        prepareCmd: "sh ./Scripts/release.sh ${nextRelease.version}",
+      },
+    ],
+    [
       "@semantic-release/git",
       {
         assets: [
@@ -45,12 +51,6 @@ module.exports = {
           "mParticle_Apple_SDK.xcframework.nolocation.zip",
           "generated-docs.zip",
         ],
-      },
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        prepareCmd: "sh ./Scripts/release.sh ${nextRelease.version}",
       },
     ],
   ],
