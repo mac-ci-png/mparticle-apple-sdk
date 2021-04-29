@@ -13,7 +13,7 @@ jobs:
     runs-on: macOS-latest
     env:
       GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+      #COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
       - name: Validate environment and no-location patch
         run: |
           env | grep -q '^GITHUB_ACCESS_TOKEN=' || (echo "Required environment variable GITHUB_ACCESS_TOKEN is not set" && exit 1)
-          env | grep -q '^COCOAPODS_TRUNK_TOKEN=' || (echo "Required environment variable COCOAPODS_TRUNK_TOKEN is not set" && exit 1)
+          #env | grep -q '^COCOAPODS_TRUNK_TOKEN=' || (echo "Required environment variable COCOAPODS_TRUNK_TOKEN is not set" && exit 1)
           git apply Scripts/0001-DISABLE-LOCATION.patch || (echo "Disable location patch could not be successfully applied" && exit 1)
           git checkout .
 
@@ -33,7 +33,7 @@ jobs:
       - name: Release --dry-run
         if: ${{ github.event.inputs.dryRun == 'true'}}
         env:
-          GITHUB_TOKEN: ${{ secrets.MP_BOT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx \
           -p lodash \
@@ -46,7 +46,7 @@ jobs:
       - name: Release
         if: ${{ github.event.inputs.dryRun == 'false'}}
         env:
-          GITHUB_TOKEN: ${{ secrets.MP_BOT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx \
           -p lodash \
@@ -57,5 +57,6 @@ jobs:
 
       - name: Release to CocoaPods
         run: |
-          sudo gem install xcodeproj
-          pod trunk push --allow-warnings
+          #sudo gem install xcodeproj
+          pod lib lint --allow-warnings
+

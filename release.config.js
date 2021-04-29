@@ -1,7 +1,7 @@
 module.exports = {
   branches: ["master"],
   tagFormat: "v${version}",
-  repositoryUrl: "https://github.com/mParticle/mparticle-apple-sdk",
+  repositoryUrl: "https://github.com/mac-ci-png/mparticle-apple-sdk",
   plugins: [
     [
       "@semantic-release/commit-analyzer",
