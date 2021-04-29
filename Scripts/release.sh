@@ -8,8 +8,8 @@ jq --indent 3 '. += {'"\"$VERSION\""': "'"https://github.com/mParticle/mparticle
 mv tmp.json mParticle_Apple_SDK.json
 sudo npm install -g podspec-bump
 podspec-bump -w -i $VERSION
-git add mParticle-Apple-SDK/MPIConstants.m Framework/Info.plist; git add mParticle-Apple-SDK.podspec; git add mParticle_Apple_SDK.json; git add CHANGELOG.md; git commit -m "Prepare release for $VERSION"
-git push origin master
+#git add mParticle-Apple-SDK/MPIConstants.m Framework/Info.plist; git add mParticle-Apple-SDK.podspec; git add mParticle_Apple_SDK.json; git add CHANGELOG.md; git commit -m "Prepare release for $VERSION"
+#git push origin master
 
 ./Scripts/make_artifacts.sh
 ls mParticle_Apple_SDK.framework.zip mParticle_Apple_SDK.framework.nolocation.zip mParticle_Apple_SDK.xcframework.zip mParticle_Apple_SDK.xcframework.nolocation.zip generated-docs.zip || exit 1
