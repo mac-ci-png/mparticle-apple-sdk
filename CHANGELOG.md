@@ -1,3 +1,10 @@
+## [8.3.5](https://github.com/mac-ci-png/mparticle-apple-sdk/compare/v8.3.4...v8.3.5) (2021-05-06)
+
+
+### Bug Fixes
+
+* Test 1 ([507695c](https://github.com/mac-ci-png/mparticle-apple-sdk/commit/507695cacb3ce0bf64f600f7101a7c3d70edc8e0))
+* Test 2 ([81972aa](https://github.com/mac-ci-png/mparticle-apple-sdk/commit/81972aa9a63c2a2e0332e001fcd418f459c56390))
 
 ## 8.3.2
 
