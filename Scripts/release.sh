@@ -1,7 +1,7 @@
 # update version numbers
 PREFIXED_VERSION="$1"
 NOTES="$2"
-VERSION="$(echo $1 | sed 's/v//g')"
+VERSION="$(echo $PREFIXED_VERSION | sed 's/v//g')"
 
 sed -i '' 's/NSString \*const kMParticleSDKVersion = @".*/NSString *const kMParticleSDKVersion = @"'"$VERSION"'";/' mParticle-Apple-SDK/MPIConstants.m
 /usr/libexec/PlistBuddy -c "Set CFBundleShortVersionString $VERSION" Framework/Info.plist
@@ -12,9 +12,9 @@ podspec-bump -w -i $VERSION
 git add mParticle-Apple-SDK/MPIConstants.m Framework/Info.plist; git add mParticle-Apple-SDK.podspec; git add mParticle_Apple_SDK.json; git add CHANGELOG.md; git commit -m "chore(release): $VERSION [skip ci]
  
 $NOTES"
-git tag $VERSION
+git tag $PREFIXED_VERSION
 git push origin master
-git push origin $VERSION
+git push origin $PREFIXED_VERSION
 
 ./Scripts/make_artifacts.sh
 ls mParticle_Apple_SDK.framework.zip mParticle_Apple_SDK.framework.nolocation.zip mParticle_Apple_SDK.xcframework.zip mParticle_Apple_SDK.xcframework.nolocation.zip generated-docs.zip || exit 1
